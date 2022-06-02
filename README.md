@@ -10,7 +10,7 @@ There are 19 features per team (38 in total) collected after 10min in-game. This
 
 The column blueWins is the target value (the value we are trying to predict). A value of 1 means the blue team has won. 0 otherwise.
 
-So far I know, there is no missing value.
+*There is no missing values in the data set.*
 
 # Glossary
 `Warding totem:` An item that a player can put on the map to reveal the nearby area. Very useful for map/objectives control.
@@ -30,8 +30,8 @@ So far I know, there is no missing value.
 `Level:` Champion level. Start at 1. Max is 18.
 
 
-# MY APPROACH TO PREDICT THE END OF A MATCH BASED ON FIRST 10 MINUTES TEAM STATS
-My Logisitic Regression aproach to predicting the result of League of Legends first 10 minutes matches 
+# CLASSIFYING LOL RANKED GAMES BY LOOKING AT THE FIRST 10 MINUTES WORTH OF DATA
+This is my Logisitic Regression aproach to predicting the result of League of Legends first 10 minutes matches 
 
 This model works by using `Logistic Regressions` in Python `Python 3.7.13`.
 
@@ -293,4 +293,80 @@ model_lr.fit(X_train, y_train)
 ```
 
 Now that our model is fully trained, let's go and see how well does it made by seeing his classification report and other metrics to check his performance.
+
 # Classification Report / Confusion Matrix / Score
+```python
+from sklearn.metrics import classification_report
+from sklearn import metrics
+pred = model_lr.predict(X_test)
+```
+Classification Report
+```python
+# Class Report
+print(classification_report(y_test,pred))
+```
+```python
+OUTPUT:
+              precision    recall  f1-score   support
+
+           0       0.74      0.75      0.74      1497
+           1       0.74      0.73      0.74      1467
+
+    accuracy                           0.74      2964
+   macro avg       0.74      0.74      0.74      2964
+weighted avg       0.74      0.74      0.74      2964
+```
+Confusion Matrix
+```python
+# Confusion Matrix
+print("Confussion Matrix")
+cm = metrics.confusion_matrix(y_test, pred)
+print(cm)
+```
+```python
+OUTPUT:
+Confussion Matrix
+[[1119  378]
+ [ 389 1078]]
+```
+Sklearn Metrics
+```python
+# Mean Absolute Error
+# Mean Squared Error
+# Root Mean Squared Error
+print('MAE:', metrics.mean_absolute_error(y_test, pred))
+print('MSE:', metrics.mean_squared_error(y_test, pred))
+print('RMSE:', np.sqrt(metrics.mean_squared_error(y_test, pred)))
+```
+```python
+OUTPUT:
+MAE: 0.25877192982456143
+MSE: 0.25877192982456143
+RMSE: 0.5086963041192274
+```
+
+Score
+```python
+print("Score: {score}".format(score = model_lr.score(X_test, y_test)))
+```
+- Score: 0.7412280701754386
+
+# Prediction 
+Lets try to make a random prediction
+```python
+import random
+
+random.seed(2907)
+random_ind = random.randint(0,len(data))
+
+new_match = data.drop('blueWins',axis=1).iloc[random_ind]
+new_match
+```
+```python
+predictions = model_lr.predict(new_match.values.reshape(1,21))
+
+threshold = 0.1
+predictions = np.where(predictions > threshold, 1,0)
+predictions
+```
+*OUTPUT:* array([1])
