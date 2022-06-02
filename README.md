@@ -371,6 +371,8 @@ random_ind = random.randint(0,len(data))
 new_match = data.drop('blueWins',axis=1).iloc[random_ind]
 new_match
 ```
+```python
+OUTPUT:
   blueWardsPlaced                   99
   blueWardsDestroyed                 7
   blueFirstBlood                     1
@@ -392,6 +394,7 @@ new_match
   redKillDiff                        1
   blueWardsRemain                   96
   redWardsRemain                    15
+```
 ```python
 predictions = model_lr.predict(new_match.values.reshape(1,21))
 
