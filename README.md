@@ -30,7 +30,7 @@ So far I know, there is no missing value.
 `Level:` Champion level. Start at 1. Max is 18.
 
 
-# Logistic_Regression
+# MY APPROACH TO PREDICT THE END OF A MATCH BASED ON FIRST 10 MINUTES TEAM STATS
 My Logisitic Regression aproach to predicting the result of League of Legends first 10 minutes matches 
 
 This model works by using `Logistic Regressions` in Python `Python 3.7.13`.
@@ -121,6 +121,17 @@ sns.clustermap(data.corr())
 ![alt text](https://github.com/JonathanCruze/League-of-Legends-Rankeds-Python-Analisis/blob/ba67aea0e6cfebf7fb0d6f590223c7f04d9f6510/Screenshots/Corr_Data_Plot.png)
 
 ## Separating the data by teams so i can look foword for further conclusions
+Looking for the amount and percentage of games won by each team.
+```python
+blueCount = (data['blueWins'] == 1).sum()
+redCount = (data['blueWins'] == 0).sum()
+
+print('Number of times the BLUE team wins: {blueCount}'.format(blueCount = (data['blueWins'] == 1).sum()))
+print('Number of times the RED team wins: {redCount}'.format(redCount = (data['blueWins'] == 0).sum()))
+```
+Number of times the BLUE team wins: *4930*
+Number of times the RED team wins: *4949*
+
 ```python
 # Data to plot
 labels = ['Blue Team wins', 'Red Team Wins']
@@ -137,8 +148,9 @@ plt.tight_layout()
 plt.show()
 ```
 ![alt text](https://github.com/JonathanCruze/League-of-Legends-Rankeds-Python-Analisis/blob/3abb00f40e1a20493d74d9f3a43db29afc5bb41d/Screenshots/Pie_chart_WinRate.png)
+ - Both teams have the same winning percentage and it differs by very little
 
-Looking if there are matches in which a team is winning and then loses
+Looking if there are matches in which a team is winning and then losses.
 ```python
 # First for blue threw games
 sns.countplot(data=data[data['blueTotalGold'] > 20000], x='blueWins')
@@ -155,38 +167,130 @@ plt.xlabel('Blue ComeBack');
 
 ## Cleaning data
 ```python
-#GameID isn't important for the algorithm so i decided to remove it
+#GameID isn't important, so i decided to remove it
 data = data.drop('gameId', axis=1)
 
 # We drop all the variables that are symetric i.e blueKills == redDeaths
-symetric_features = ["redFirstBlood", "blueDeaths", "redDeaths", "redGoldDiff", "redExperienceDiff"]
+symetric_features = ['redFirstBlood', 'blueDeaths', 'redDeaths', 'redGoldDiff', 'redExperienceDiff']
 
 # We drop all the redundant variables. For example, we do not care about the total amount of gold earned, what matters is actually the difference compared to the enemy team
 redundant_features = ['redTotalGold', 'blueTotalGold', 'redAvgLevel', 'blueAvgLevel', 'redTotalExperience', 'blueTotalExperience', 'redTotalMinionsKilled','blueTotalMinionsKilled', 'blueKills', 'redKills']
 
 # We drop highly correlated features. For example, the redAvgLevel is logically highly corelated with the 
-multicolinear_features = ["redCSPerMin", "blueCSPerMin", "blueEliteMonsters", "redEliteMonsters", "blueGoldPerMin", "redGoldPerMin"]
+multicolinear_features = ['redCSPerMin', 'blueCSPerMin', 'blueEliteMonsters', 'redEliteMonsters', 'blueGoldPerMin', 'redGoldPerMin']
 
 # Kill difference
-data = data.assign(blueKillDiff = data["blueKills"] - data["redKills"])
-data = data.assign(redKillDiff = data["redKills"] - data["blueKills"])
+data = data.assign(blueKillDiff = data['blueKills'] - data['redKills'])
+data = data.assign(redKillDiff = data['redKills'] - data['blueKills'])
+
 # Remaining wards
-data = data.assign(blueWardsRemain = data["blueWardsPlaced"] - data["redWardsDestroyed"])
-data = data.assign(redWardsRemain = data["redWardsPlaced"] - data["blueWardsDestroyed"])
+data = data.assign(blueWardsRemain = data['blueWardsPlaced'] - data['redWardsDestroyed'])
+data = data.assign(redWardsRemain = data['redWardsPlaced'] - data['blueWardsDestroyed'])
 
-
+# Droppin features
 data = data.drop(symetric_features, axis = 1)
 data = data.drop(redundant_features, axis = 1)
 data = data.drop(multicolinear_features, axis = 1)
 ```
 Looking for high and low impact on determinating the Win condition 
 ```python
-data.corr()["blueWins"].drop("blueWins").sort_values().plot(kind = "bar")
+data.corr()['blueWins'].drop('blueWins').sort_values().plot(kind = 'bar')
 ```
 ![alt text](https://github.com/JonathanCruze/League-of-Legends-Rankeds-Python-Analisis/blob/0f08521b5d28ed1c97ea0a3d18d658a48e6423ba/Screenshots/Corr_BlueWins_Plot.png)
 ```python
 data.shape
-
-  (9879, 22)
 ```
-# Data Splitting
+  (9879, 22)
+ 
+```python
+# Cleaned DataFrame
+data
+```
+![alt text](https://github.com/JonathanCruze/League-of-Legends-Rankeds-Python-Analisis/blob/41141a6ddb05253ab184f5dc722526756c9b7300/Screenshots/Cleaned_Pandas_dataFrame.png)
+
+## Blue and Red Team Data Split
+Sepparating the data just for the Blue Team Tags:
+```python
+blue_data_columns = []
+for col in data.columns:
+       if 'blue' in col:
+              blue_data_columns.append(col)
+```
+```python
+data_blue = data[blue_data_columns]
+data_blue.head(7)
+```
+![alt text](https://github.com/JonathanCruze/League-of-Legends-Rankeds-Python-Analisis/blob/41141a6ddb05253ab184f5dc722526756c9b7300/Screenshots/BlueData_Pandas_dataFrame.png)
+
+Sepparating the data just for the Red Team Tags:
+```python
+#Red Team Data
+red_data_columns = []
+for col in data.columns:
+       if 'red' in col:
+              red_data_columns.append(col)
+```
+```python
+# Creating 'RedWins' tag
+data_red = data[red_data_columns]
+data_red['redWins'] = data['blueWins'].map({1:0,0:1})
+
+# Reorganizing Features
+first_column = data_red.pop('redWins')
+data_red.insert(0, 'redWins', first_column)
+
+data_red['redFirstBlod'] = data['blueFirstBlood'].map({1:0,0:1})
+first_column = data_red.pop('redFirstBlod')
+data_red.insert(3, 'redFirstBlod', first_column)
+```
+```python
+data_red.head(7)
+```
+![alt text](https://github.com/JonathanCruze/League-of-Legends-Rankeds-Python-Analisis/blob/41141a6ddb05253ab184f5dc722526756c9b7300/Screenshots/RedData_Pandas_dataFrame.png)
+
+## Making plot charts so is easy to see the overall differences between teams 
+```python
+# First - the blue team
+data_blue.drop(['blueGoldDiff', 'blueExperienceDiff', 'blueGoldDiff'], axis = 1).hist(color = 'b', figsize = (10,10))
+plt.tight_layout()
+plt.show()
+```
+![alt text](https://github.com/JonathanCruze/League-of-Legends-Rankeds-Python-Analisis/blob/41141a6ddb05253ab184f5dc722526756c9b7300/Screenshots/BlueData_Plot.png)
+```python
+# Then - the red team
+data_red.hist(color = 'r', figsize = (10,10))
+plt.tight_layout()
+plt.show()
+```
+![alt text](https://github.com/JonathanCruze/League-of-Legends-Rankeds-Python-Analisis/blob/41141a6ddb05253ab184f5dc722526756c9b7300/Screenshots/RedData_Plot.png)
+- It looks like there are no significant values that affect an especific team to win
+
+# Model
+First, lets define the X and the Y values.
+```python
+X = data.drop("blueWins", axis = 1)
+y = data["blueWins"]
+```
+Later, we set the Train-Test-Split function.
+```python
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=2907)
+```
+Then, we scale the data.
+```python
+from sklearn.preprocessing import MinMaxScaler
+
+scaler = MinMaxScaler()
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
+```
+Now we can train the model
+```python
+from sklearn.linear_model import LogisticRegression
+
+#Logistic Regression model
+model_lr = LogisticRegression()
+model_lr.fit(X_train, y_train)
+```
+
+Now that our model is fully trained, let's go and see how well does it made by seeing his classification report and other metrics to check his performance.
+# Classification Report / Confusion Matrix / Score
