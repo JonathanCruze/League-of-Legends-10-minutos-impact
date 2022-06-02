@@ -23,7 +23,7 @@ data = pd.read_csv('/content/drive/MyDrive/GitHub/LoL_rankeds.csv')
 data
 ```
 
-![alt text](https://raw.githubusercontent.com/JonathanCruze/League-of-Legends-10-minutos-impact/Screenshots/Initial_Pandas_dataFrame.png)
+![alt text](https://raw.githubusercontent.com/JonathanCruze/League-of-Legends-Rankeds-Python-Analisis/blob/main/Screenshots/Initial_Pandas_dataFrame.png)
 
 Viewing all Tag's:
 ```
