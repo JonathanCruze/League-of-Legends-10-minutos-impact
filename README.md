@@ -157,7 +157,7 @@ plt.tight_layout()
 plt.show()
 ```
 ![alt text](https://github.com/JonathanCruze/League-of-Legends-Rankeds-Python-Analisis/blob/3abb00f40e1a20493d74d9f3a43db29afc5bb41d/Screenshots/Pie_chart_WinRate.png)
- - Both teams have the basically the same winning percentage and it just differs by very little
+ - Both teams have the basically the same winning percentage and it just differs by a little.
 
 Looking if there are matches in which a team is winning and then losses.
 ```python
@@ -341,10 +341,10 @@ Confussion Matrix
 ## Sklearn Metrics
 ```python
 # Mean Absolute Error
-# Mean Squared Error
-# Root Mean Squared Error
 print('MAE:', metrics.mean_absolute_error(y_test, pred))
+# Mean Squared Error
 print('MSE:', metrics.mean_squared_error(y_test, pred))
+# Root Mean Squared Error
 print('RMSE:', np.sqrt(metrics.mean_squared_error(y_test, pred)))
 ```
 MAE: 0.25877192982456143
