@@ -405,8 +405,8 @@ predictions
 *OUTPUT:* array([1])
 
 # CONCLUSION
-I am a League of Legends player since several year by now, and i consider i have a great understanding of the data treated in here, so this project was suitable for me, since i was looking for practice my knowledgement in data-cience and what better if not applying it to something that i really like and enjoy playing.
+I am a League of Legends player for several years by now, and i consider that i have a great understanding of the data treated in here, so this project was very suitable for me, since i was looking for practice my knowledgement in data-cience and what better if not applying it to something that i really like and enjoy playing.
 
-As my first Data-Cience project, i think this ended up wrappin' very nicely; it was very fun and appealing, also, as a League player, i really found it really interesting by searching and viewing all the stats making sense when you compare them to each other for viewing how it affects if a team is going to win or not.
+As my first Data-Cience project, i think this ended wrappin' up very nicely; it was very fun and appealing project to do, also, as a League player, i really found it really interesting by searching and viewing all the stats making sense when you compare them to each other for viewing how it affects if a team is going to win or not by the end of the match by simply watching the first ten minutes statistics.
 
 Anyways, thanks for your time.
