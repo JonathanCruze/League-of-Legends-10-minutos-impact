@@ -30,7 +30,7 @@ The column blueWins is the target value (the value we are trying to predict). A 
 `Level:` Champion level. Start at 1. Max is 18.
 
 
-# CLASSIFYING LOL RANKED GAMES BY LOOKING AT THE FIRST 10 MINUTES WORTH OF DATA
+# CLASSIFYING LOL HIGH-ELO RANKED GAMES BY LOOKING AT THE FIRST 10 MINUTES WORTH OF DATA 
 This is my Logisitic Regression aproach to predicting the result of League of Legends first 10 minutes matches 
 
 This model works by using `Logistic Regressions` in Python `Python 3.7.13`.
@@ -324,8 +324,10 @@ cm = metrics.confusion_matrix(y_test, pred)
 print(cm)
 ```
 Confussion Matrix
+
 [[1119  378]
- [ 389 1078]]
+
+[ 389 1078]]
 
 ## Sklearn Metrics
 ```python
@@ -337,7 +339,9 @@ print('MSE:', metrics.mean_squared_error(y_test, pred))
 print('RMSE:', np.sqrt(metrics.mean_squared_error(y_test, pred)))
 ```
 MAE: 0.25877192982456143
+
 MSE: 0.25877192982456143
+
 RMSE: 0.5086963041192274
 
 
