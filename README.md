@@ -124,7 +124,8 @@ Correlated values:
 sns.clustermap(data.corr())
 ```
 ![alt text](https://github.com/JonathanCruze/League-of-Legends-Rankeds-Python-Analisis/blob/ba67aea0e6cfebf7fb0d6f590223c7f04d9f6510/Screenshots/Corr_Data_Plot.png)
-With this correlational plot we were able to observe some pairs of columns with almost perfect correlation, for example: (blueKills, redDeaths). This is because these columns actually represent the same information, as each Blue Team Kill is obviusly a Red Team Death. These suggest that some columns can be removed.
+
+With this correlational plot we were able to observe that some pairs of columns has a perfect correlation, for example: (blueKills, redDeaths). This is because these columns actually represent the same information, as each Blue Team Kill is obviusly a Red Team Death. These suggest that some columns can be removed.
 
 ## Separating the data by teams so i can look foword for further conclusions
 Looking for the amount and percentage of games won by each team.
