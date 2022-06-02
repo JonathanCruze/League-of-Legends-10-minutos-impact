@@ -300,7 +300,7 @@ from sklearn.metrics import classification_report
 from sklearn import metrics
 pred = model_lr.predict(X_test)
 ```
-Classification Report
+## Classification Report
 ```python
 # Class Report
 print(classification_report(y_test,pred))
@@ -316,20 +316,18 @@ OUTPUT:
    macro avg       0.74      0.74      0.74      2964
 weighted avg       0.74      0.74      0.74      2964
 ```
-Confusion Matrix
+## Confusion Matrix
 ```python
 # Confusion Matrix
 print("Confussion Matrix")
 cm = metrics.confusion_matrix(y_test, pred)
 print(cm)
 ```
-```python
-OUTPUT:
 Confussion Matrix
 [[1119  378]
  [ 389 1078]]
-```
-Sklearn Metrics
+
+## Sklearn Metrics
 ```python
 # Mean Absolute Error
 # Mean Squared Error
@@ -338,14 +336,12 @@ print('MAE:', metrics.mean_absolute_error(y_test, pred))
 print('MSE:', metrics.mean_squared_error(y_test, pred))
 print('RMSE:', np.sqrt(metrics.mean_squared_error(y_test, pred)))
 ```
-```python
-OUTPUT:
 MAE: 0.25877192982456143
 MSE: 0.25877192982456143
 RMSE: 0.5086963041192274
-```
 
-Score
+
+## Score
 ```python
 print("Score: {score}".format(score = model_lr.score(X_test, y_test)))
 ```
