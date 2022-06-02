@@ -51,7 +51,7 @@ from sklearn.model_selection import train_test_split
 Loading Data:
 ```python
 # get pandas dataframe
-data = pd.read_csv('/content/drive/MyDrive/GitHub/LoL_rankeds.csv')
+data = pd.read_csv('LoL_10min_stats.csv')
 data
 ```
 ![alt text](https://github.com/JonathanCruze/League-of-Legends-Rankeds-Python-Analisis/blob/3abb00f40e1a20493d74d9f3a43db29afc5bb41d/Screenshots/Initial_Pandas_dataFrame.png)
