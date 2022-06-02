@@ -23,7 +23,8 @@ data = pd.read_csv('/content/drive/MyDrive/GitHub/LoL_rankeds.csv')
 data
 ```
 
-![alt text](https://raw.githubusercontent.com/JonathanCruze/League-of-Legends-Rankeds-Python-Analisis/blob/main/Screenshots/Initial_Pandas_dataFrame.png)
+
+![alt text](https://github.com/JonathanCruze/League-of-Legends-Rankeds-Python-Analisis/blob/3abb00f40e1a20493d74d9f3a43db29afc5bb41d/Screenshots/Initial_Pandas_dataFrame.png)
 
 Viewing all Tag's:
 ```
@@ -80,13 +81,13 @@ Histogram for every tag in the data frame:
 ```python
 data.hist(figsize=(20,20), **{"align": "mid"})
 ```
-![alt text](https://raw.githubusercontent.com/)
+![alt text](https://github.com/JonathanCruze/League-of-Legends-Rankeds-Python-Analisis/blob/3abb00f40e1a20493d74d9f3a43db29afc5bb41d/Screenshots/Hist_Plots.png)
 
 Correlated values:
 ```python
 sns.clustermap(data.corr())
 ```
-![alt text](https://raw.githubusercontent.com/)
+![alt text](https://github.com/JonathanCruze/League-of-Legends-Rankeds-Python-Analisis/blob/ba67aea0e6cfebf7fb0d6f590223c7f04d9f6510/Screenshots/Corr_Data_Plot.png)
 
 ## Separating the data by teams so i can look foword for further conclusions
 ```python
@@ -104,7 +105,7 @@ plt.axis('equal')
 plt.tight_layout()
 plt.show()
 ```
-![alt text](https://raw.githubusercontent.com/)
+![alt text](https://github.com/JonathanCruze/League-of-Legends-Rankeds-Python-Analisis/blob/3abb00f40e1a20493d74d9f3a43db29afc5bb41d/Screenshots/Pie_chart_WinRate.png)
 
 Looking if there are matches in which a team is winning and then loses
 ```python
