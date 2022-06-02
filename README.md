@@ -2,7 +2,6 @@
 My Logisitic Regression aproach to predicting the result of League of Legends first 10 minutes matches 
 
 This model works by using `Logistic Regressions` in Python `Python 3.7.13`.
-Downloadable Dataset link: https://www.kaggle.com/datasets/bobbyscience/league-of-legends-diamond-ranked-games-10-min
 
 ## Importing libraries
 ```bash
@@ -23,7 +22,8 @@ Loading Data:
 data = pd.read_csv('/content/drive/MyDrive/GitHub/LoL_rankeds.csv')
 data
 ```
-![alt text](https://raw.githubusercontent.com/)
+
+![alt text](https://raw.githubusercontent.com/JonathanCruze/Screenshots/Initial_Pandas_dataFrame.png)
 
 Viewing all Tag's:
 ```
