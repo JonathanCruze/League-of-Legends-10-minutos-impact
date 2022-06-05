@@ -402,8 +402,10 @@ threshold = 0.1
 predictions = np.where(predictions > threshold, 1,0)
 predictions
 ```
-*OUTPUT:* array([1])
-
+```python
+OUTPUT: 
+array([1])
+```
 # CONCLUSION
 I am a League of Legends player for several years by now, and i consider that i have a great understanding of the data treated in here, so this project was very suitable for me, since i was looking for practice my knowledgement in data-cience and what better if not applying it to something that i really like and enjoy playing.
 
