@@ -120,7 +120,7 @@ Histogram for every tag in the data frame:
 data.hist(figsize=(20,20), **{"align": "mid"})
 ```
 ![alt text](https://github.com/JonathanCruze/League-of-Legends-Rankeds-Python-Analisis/blob/3abb00f40e1a20493d74d9f3a43db29afc5bb41d/Screenshots/Hist_Plots.png)
-- I could have tried to make better looking graphs but i wanted to prioritize if i could see any interesting parameters, but all of them look pretty standard
+- I could have tried to make better looking graphs but i wanted to prioritize if i could see any interesting parameters, but all of them look pretty standard and nothing out of the ordinary
 
 Correlated values:
 ```python
