@@ -355,12 +355,13 @@ print("Confussion Matrix")
 cm = metrics.confusion_matrix(y_test, pred)
 print(cm)
 ```
-Confussion Matrix
+```python
+OUTPUT:
+  Confussion Matrix
 
-[[1119  378]
-
-[ 389 1078]]
-
+    [[1119  378]
+     [389  1078]]
+```
 ## Sklearn Metrics
 ```python
 # Mean Absolute Error
