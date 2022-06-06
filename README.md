@@ -195,6 +195,7 @@ data = data.assign(redKillDiff = data['redKills'] - data['blueKills'])
 # Remaining wards
 data = data.assign(blueWardsRemain = data['blueWardsPlaced'] - data['redWardsDestroyed'])
 data = data.assign(redWardsRemain = data['redWardsPlaced'] - data['blueWardsDestroyed'])
+data = data.drop(['redWardsPlaced','redWardsDestroyed','blueWardsPlaced','blueWardsDestroyed'], axis = 1)
 
 # Droppin features
 data = data.drop(symetric_features, axis = 1)
@@ -205,13 +206,13 @@ Looking for high and low impact on determinating the Win condition
 ```python
 data.corr()['blueWins'].drop('blueWins').sort_values().plot(kind = 'bar')
 ```
-![alt text](https://github.com/JonathanCruze/League-of-Legends-Rankeds-Python-Analisis/blob/0f08521b5d28ed1c97ea0a3d18d658a48e6423ba/Screenshots/Corr_BlueWins_Plot.png)
+![alt text](https://github.com/JonathanCruze/League-of-Legends-Rankeds-Python-Analisis/blob/145eeb0749d60509bc8816246e4f56f61d480c46/Screenshots/Corr_BlueWins_Plot.png)
 ```python
 data.shape
 ```
 ```python
 OUTPUT:
-  (9879, 22)
+  (9879, 18)
 ```
 
 ```python
@@ -223,13 +224,16 @@ data
 ## Blue and Red Team Data Split
 Sepparating the data just for the Blue Team Tags:
 ```python
+data_split = data
+
+# Blue Team Data
 blue_data_columns = []
-for col in data.columns:
+for col in data_split.columns:
        if 'blue' in col:
               blue_data_columns.append(col)
 ```
 ```python
-data_blue = data[blue_data_columns]
+data_blue = data_split[blue_data_columns]
 data_blue.head(7)
 ```
 ![alt text](https://github.com/JonathanCruze/League-of-Legends-Rankeds-Python-Analisis/blob/41141a6ddb05253ab184f5dc722526756c9b7300/Screenshots/BlueData_Pandas_dataFrame.png)
@@ -238,20 +242,20 @@ Sepparating the data just for the Red Team Tags:
 ```python
 #Red Team Data
 red_data_columns = []
-for col in data.columns:
+for col in data_split.columns:
        if 'red' in col:
               red_data_columns.append(col)
 ```
 ```python
 # Creating 'RedWins' tag
-data_red = data[red_data_columns]
-data_red['redWins'] = data['blueWins'].map({1:0,0:1})
+data_red = data_split[red_data_columns]
+data_red['redWins'] = data_split['blueWins'].map({1:0,0:1})
 
-# Reorganizing Features
+# Reorganizing 'redWins' column
 first_column = data_red.pop('redWins')
 data_red.insert(0, 'redWins', first_column)
 
-data_red['redFirstBlod'] = data['blueFirstBlood'].map({1:0,0:1})
+data_red['redFirstBlod'] = data_split['blueFirstBlood'].map({1:0,0:1})
 first_column = data_red.pop('redFirstBlod')
 data_red.insert(3, 'redFirstBlod', first_column)
 ```
@@ -277,6 +281,17 @@ plt.show()
 ![alt text](https://github.com/JonathanCruze/League-of-Legends-Rankeds-Python-Analisis/blob/41141a6ddb05253ab184f5dc722526756c9b7300/Screenshots/RedData_Plot.png)
 - It looks like there are no significant values that affect an especific team to win
 
+```python
+# Removing non-cuantificable data during match and reindexing columns for better readability
+data = data.drop(['redKillDiff', 'blueExperienceDiff', 'redTotalJungleMinionsKilled',
+                  'blueTotalJungleMinionsKilled', 'redWardsRemain','blueWardsRemain'], axis = 1)
+                  
+data = data.reindex(columns=['blueWins','blueFirstBlood', 'blueKillDiff', 'blueGoldDiff',
+                             'blueAssists', 'blueDragons', 'blueHeralds','blueTowersDestroyed',
+                             'redAssists', 'redDragons', 'redHeralds', 'redTowersDestroyed'])
+data
+```
+![alt text](https://github.com/JonathanCruze/League-of-Legends-Rankeds-Python-Analisis/blob/38a366d4397083547c5867ee4646a9ef17c8d355/Screenshots/Reindex_data.png)
 # Model
 First, lets define the X and the Y values.
 ```python
@@ -321,12 +336,12 @@ print(classification_report(y_test,pred))
 OUTPUT:
               precision    recall  f1-score   support
 
-           0       0.74      0.75      0.74      1497
-           1       0.74      0.73      0.74      1467
+           0       0.75      0.74      0.74       746
+           1       0.74      0.75      0.74       736
 
-    accuracy                           0.74      2964
-   macro avg       0.74      0.74      0.74      2964
-weighted avg       0.74      0.74      0.74      2964
+    accuracy                           0.74      1482
+   macro avg       0.74      0.74      0.74      1482
+weighted avg       0.74      0.74      0.74      1482
 ```
 ## Confusion Matrix
 ```python
@@ -361,8 +376,10 @@ RMSE: 0.5086963041192274
 ```python
 print("Score: {score}".format(score = model_lr.score(X_test, y_test)))
 ```
-- Score: 0.7412280701754386
-
+```python
+OUTPUT:
+  Score: 0.7422402159244265
+```
 # Prediction 
 Lets try to make a random prediction
 ```python
@@ -376,38 +393,33 @@ new_match
 ```
 ```python
 OUTPUT:
-  blueWardsPlaced                   99
-  blueWardsDestroyed                 7
-  blueFirstBlood                     1
-  blueAssists                        7
-  blueDragons                        1
-  blueHeralds                        0
-  blueTowersDestroyed                0
-  blueTotalJungleMinionsKilled      55
-  blueGoldDiff                     577
-  blueExperienceDiff              1371
-  redWardsPlaced                    22
-  redWardsDestroyed                  3
-  redAssists                         8
-  redDragons                         0
-  redHeralds                         0
-  redTowersDestroyed                 0
-  redTotalJungleMinionsKilled       47
-  blueKillDiff                      -1
-  redKillDiff                        1
-  blueWardsRemain                   96
-  redWardsRemain                    15
+      blueFirstBlood            0
+      blueKillDiff             -6
+      blueGoldDiff          -4858
+      blueAssists               3
+      blueDragons               0
+      blueHeralds               1
+      blueTowersDestroyed       0
+      redAssists               15
+      redDragons                1
+      redHeralds                0
+      redTowersDestroyed        1
+  Name: 9521, dtype: int64
 ```
 ```python
-predictions = model_lr.predict(new_match.values.reshape(1,21))
+predictions = model_lr.predict(new_match.values.reshape(1,11))
 
 threshold = 0.1
 predictions = np.where(predictions > threshold, 1,0)
-predictions
+
+if predictions == 1:
+    print('*Blue Team is going to win*')
+else:
+    print('*Red Team is going to win*')
 ```
 ```python
 OUTPUT: 
-array([1])
+  *Red Team is going to win*
 ```
 # CONCLUSION
 I am a League of Legends player for several years by now, and i consider that i have a great understanding of the data treated in here, so this project was very suitable for me, since i was looking for practice my knowledgement in data-cience and what better if not applying it to something that i really like and enjoy playing.
