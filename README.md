@@ -165,18 +165,18 @@ plt.show()
 Looking if there are matches in which a team is winning and then losses.
 ```python
 # First for blue threw games
-sns.countplot(data=data[data['blueTotalGold'] > 20000], x='blueWins')
+sns.countplot(data=data[data['blueTotalGold'] > 20000], x='blueWins', palette="Set1")
 plt.ylim([1,70])
 plt.xlabel('Red Comeback');
 ```
-![alt text](https://github.com/JonathanCruze/League-of-Legends-Rankeds-Python-Analisis/blob/c05fcc36be9ec54859f11ac419bb9204b1e3455c/Screenshots/Red_Comeback_Plot.png)
+![alt text](https://github.com/JonathanCruze/League-of-Legends-Rankeds-Python-Analisis/blob/6108bb89fc3fb1ae13c956174b6d9dd687ba7aec/Screenshots/Red_Comeback_Plot.png)
 ```python
 # Second for red threw games
-sns.countplot(data=data[data['redTotalGold'] > 20000], x='blueWins')
+sns.countplot(data=data[data['redTotalGold'] > 20000], x='blueWins', palette="Set1")
 plt.ylim([1,70])
 plt.xlabel('Blue ComeBack');
 ```
-![alt text](https://github.com/JonathanCruze/League-of-Legends-Rankeds-Python-Analisis/blob/c05fcc36be9ec54859f11ac419bb9204b1e3455c/Screenshots/Blue_Comeback_Plot.png)
+![alt text](https://github.com/JonathanCruze/League-of-Legends-Rankeds-Python-Analisis/blob/6108bb89fc3fb1ae13c956174b6d9dd687ba7aec/Screenshots/Blue_Comeback_Plot.png)
 - Apparently Red Team throws a little bit more than Blue Team
 
 ## Cleaning data
