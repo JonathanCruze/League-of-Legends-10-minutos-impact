@@ -357,8 +357,8 @@ print(cm)
 ```
 ```python
 OUTPUT:
-  Confussion Matrix
 
+  Confussion Matrix
     [[1119  378]
      [389  1078]]
 ```
@@ -371,12 +371,13 @@ print('MSE:', metrics.mean_squared_error(y_test, pred))
 # Root Mean Squared Error
 print('RMSE:', np.sqrt(metrics.mean_squared_error(y_test, pred)))
 ```
-MAE: 0.25877192982456143
+```python
+OUTPUT:
 
-MSE: 0.25877192982456143
-
-RMSE: 0.5086963041192274
-
+    MAE: 0.25877192982456143
+    MSE: 0.25877192982456143
+    RMSE: 0.5086963041192274
+```
 
 ## Score
 ```python
