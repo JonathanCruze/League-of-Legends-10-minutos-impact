@@ -209,8 +209,11 @@ data.corr()['blueWins'].drop('blueWins').sort_values().plot(kind = 'bar')
 ```python
 data.shape
 ```
+```python
+OUTPUT:
   (9879, 22)
- 
+```
+
 ```python
 # Cleaned DataFrame
 data
