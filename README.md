@@ -110,8 +110,10 @@ With this, you can see that there is no NaN values in the data set, becouse all 
 ```python
 data.shape
 ```
-(9879, 40)
-
+```python
+OUTPUT:
+  (9879, 40)
+```
 ## A short data analysis
 Histogram for every tag in the data frame:
 ```python
@@ -214,7 +216,7 @@ data.shape
 OUTPUT:
   (9879, 18)
 ```
-
+Let's see the cleaned Data Frame with all the variables that we just removed 
 ```python
 # Cleaned DataFrame
 data
