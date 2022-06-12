@@ -330,12 +330,12 @@ model_lr.fit(X_train, y_train)
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 vectorizer = TfidfVectorizer(min_df=1)
-X_train_lr = vectorizer.fit_transform(X_train).toarray()
-X_test_lr = vectorizer.transform(X_test).toarray()
+X_train = vectorizer.fit_transform(X_train).toarray()
+X_test = vectorizer.transform(X_test).toarray()
 
 # compute SHAP values
-explainer = shap.Explainer(model_lr, X_train_lr, feature_names=vectorizer.get_feature_names_out())
-shap_values = explainer(X_test_lr)
+explainer = shap.Explainer(model_lr, X_train, feature_names=vectorizer.get_feature_names_out())
+shap_values = explainer(X_test)
 ```
 
 Now that our model is fully trained, let's go and see how well does it made by seeing his classification report and other metrics to check his performance.
@@ -344,6 +344,7 @@ Now that our model is fully trained, let's go and see how well does it made by s
 ```python
 from sklearn.metrics import classification_report
 from sklearn import metrics
+
 pred = model_lr.predict(X_test)
 ```
 ```python
