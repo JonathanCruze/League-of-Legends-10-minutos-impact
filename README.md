@@ -45,10 +45,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-import catboost
-from catboost import *
 import shap
-
 from sklearn.model_selection import train_test_split
 ```
 
@@ -329,6 +326,17 @@ from sklearn.linear_model import LogisticRegression
 model_lr = LogisticRegression()
 model_lr.fit(X_train, y_train)
 ```
+```python
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+vectorizer = TfidfVectorizer(min_df=1)
+X_train_lr = vectorizer.fit_transform(X_train).toarray()
+X_test_lr = vectorizer.transform(X_test).toarray()
+
+# compute SHAP values
+explainer = shap.Explainer(model_lr, X_train_lr, feature_names=vectorizer.get_feature_names_out())
+shap_values = explainer(X_test_lr)
+```
 
 Now that our model is fully trained, let's go and see how well does it made by seeing his classification report and other metrics to check his performance.
 
@@ -338,6 +346,22 @@ from sklearn.metrics import classification_report
 from sklearn import metrics
 pred = model_lr.predict(X_test)
 ```
+```python
+from umap import UMAP
+# compute 2D embedding of SHAP values
+s_2d = UMAP(
+  n_components=2, n_neighbors=200, min_dist=0.5, verbose=True
+).fit_transform(shap_values.values)
+```
+```python
+UMAP_2D= pd.DataFrame(s_2d, columns=['UMAP1','UMAP2'])
+import plotly.express as px
+df = px.data.iris()
+fig = px.scatter(UMAP_2D, x="UMAP1", y="UMAP2", color=y_test, title = 'Shap - Logistic Regression model')
+fig.show()
+```
+![alt text](https://github.com/JonathanCruze/League-of-Legends-Rankeds-Python-Analisis/blob/2440084efef7bf2aebd0c152ea430631ec18c1f2/Screenshots/Scatter.png)
+
 ## Classification Report
 ```python
 # Class Report
@@ -357,16 +381,10 @@ weighted avg       0.74      0.74      0.74      1482
 ## Confusion Matrix
 ```python
 # Confusion Matrix
-print("Confussion Matrix")
-cm = metrics.confusion_matrix(y_test, pred)
-print(cm)
+cnf_mtx=confusion_matrix(y_test, model.predict(X_test))
+sns.heatmap(cnf_mtx, annot=True, fmt="d")
 ```
-```python
-OUTPUT:
-  Confussion Matrix
-    [[1119  378]
-     [389  1078]]
-```
+![alt text](https://github.com/JonathanCruze/League-of-Legends-Rankeds-Python-Analisis/blob/2440084efef7bf2aebd0c152ea430631ec18c1f2/Screenshots/Conf_Mtx.png)
 ## Sklearn Metrics
 ```python
 # Mean Absolute Error
