@@ -1,3 +1,5 @@
+
+
 # Context
 League of Legends is a MOBA (multiplayer online battle arena) where 2 teams (blue and red) face off. There are 3 lanes, a jungle, and 5 roles. The goal is to take down the enemy Nexus before the enemy destroys yours to win the game.
 
@@ -28,7 +30,7 @@ The column blueWins is the target value (the value we are trying to predict). A 
 `Towers:` Structures you have to destroy to reach the enemy Nexus. They give gold.
 
 `Level:` Champion level. Start at 1. Max is 18.
-
+![alt text](https://github.com/JonathanCruze/League-of-Legends-Rankeds-Python-Analisis/blob/3aca478b186f7fe97a803decdbfccedc5eb35ee1/Screenshots/LoL_Logo_Rendered_LARGE.png)
 
 # CLASSIFYING LOL HIGH-ELO RANKED GAMES BY LOOKING AT THE FIRST 10 MINUTES WORTH OF DATA 
 This is my Logisitic Regression aproach to predicting the result of League of Legends first 10 minutes matches 
@@ -42,6 +44,10 @@ import numpy as np
 
 import matplotlib.pyplot as plt
 import seaborn as sns
+
+import catboost
+from catboost import *
+import shap
 
 from sklearn.model_selection import train_test_split
 ```
@@ -226,7 +232,7 @@ data
 ```
 ![alt text](https://github.com/JonathanCruze/League-of-Legends-Rankeds-Python-Analisis/blob/41141a6ddb05253ab184f5dc722526756c9b7300/Screenshots/Cleaned_Pandas_dataFrame.png)
 
-## Blue and Red Team Data Split
+## Blue Team vs Red Team - Data exploration
 Sepparating the data just for the Blue Team Tags:
 ```python
 data_split = data
