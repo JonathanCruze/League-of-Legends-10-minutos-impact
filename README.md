@@ -35,7 +35,7 @@ The column blueWins is the target value (the value we are trying to predict). A 
 # CLASSIFYING LOL HIGH-ELO RANKED GAMES BY LOOKING AT THE FIRST 10 MINUTES WORTH OF DATA 
 This is my Logisitic Regression aproach to predicting the result of League of Legends first 10 minutes matches 
 
-This model works by using `Logistic Regressions` in Python `Python 3.7.13`.
+This model works by using `Logistic Regressions` and `Shap Values` in Python `Python 3.7.13`.
 
 ## Importing libraries
 ```bash
